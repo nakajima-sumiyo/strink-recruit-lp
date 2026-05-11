@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社ストリンク 採用情報</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#5F8F89',
+                        mint: '#DDEBE7',
+                        warmwhite: '#F8F7F3',
+                        charcoal: '#263332',
+                        softgray: '#6F7C7A',
+                        coral: '#E59B7A',
+                        coralhover: '#D98263',
+                        softyellow: '#F3D98B',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        hand: ['"Zen Kurenaido"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'apple': '0 8px 30px rgba(0,0,0,0.04)',
+                        'apple-hover': '0 20px 40px rgba(0,0,0,0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for specialized styling -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #F8F7F3; /* warmwhite */
+            color: #263332; /* charcoal */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* 3D Canvas Container */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-sage {
+            background: rgba(95, 143, 137, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Hide scrollbar for smooth appearance */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8F7F3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #DDEBE7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5F8F89;
+        }
+
+        /* Utilities */
+        .text-balance {
+            text-wrap: balance;
+        }
+        
+        /* Hide elements initially for GSAP scroll trigger */
+        .fade-up, .fade-in, .scale-up {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-sage tracking-wider">STRINK</div>
+            <a href="#cta" class="bg-coral hover:bg-coralhover text-white text-sm font-bold py-2.5 px-6 rounded-full transition-colors shadow-sm">
+                エントリー
+            </a>
+        </div>
+    </nav>
+
+    <!-- 1. ヒーローセクション -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-sage">
+        <!-- Three.js Canvas -->
+        <div id="canvas-container"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-8 drop-shadow-lg text-balance">
+                あなたの「<span class="font-hand text-softyellow text-5xl md:text-7xl inline-block -rotate-3 transform origin-center mx-2">やってみたい</span>」が、<br class="hidden md:block">
+                誰かの「<span class="font-hand text-softyellow text-5xl md:text-7xl inline-block rotate-2 transform origin-center mx-2">助かった</span>」に変わる場所。
+            </h1>
+            <div class="glass-sage rounded-2xl p-8 max-w-2xl mx-auto mt-12 shadow-2xl fade-up delay-200">
+                <p class="text-warmwhite text-lg md:text-xl leading-relaxed">
+                    オンラインストレージという、目立たないけれど、<br class="hidden md:block">なくてはならない仕組み。<br>
+                    私たちが作っているのは、世界をほんの少し便利にする、<br class="hidden md:block">安心のインフラです。
+                </p>
+                <div class="mt-8">
+                    <a href="#cta" class="inline-block bg-coral hover:bg-coralhover text-white font-bold py-4 px-10 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                        カジュアル面談を申し込む
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-10 text-warmwhite">
+            <span class="text-sm tracking-widest mb-2 font-light">SCROLL</span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </header>
+
+    <!-- 2. 共感セクション -->
+    <section class="py-32 px-6 bg-warmwhite overflow-hidden">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 relative fade-up">
+                <div class="absolute inset-0 bg-mint rounded-3xl transform -translate-x-4 translate-y-4 -z-10"></div>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="チームで会話しているシーン" class="rounded-3xl shadow-apple object-cover h-[500px] w-full">
+            </div>
+            <div class="order-1 md:order-2 fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-charcoal leading-tight mb-8 text-balance">
+                    ITって、なんだか冷たいものだと思っていましたか?
+                </h2>
+                <div class="space-y-6 text-lg text-softgray leading-relaxed">
+                    <p>画面に向かう時間は長いけれど、その向こう側には必ず「人」がいます。</p>
+                    <p>私たちが大切にしているのは、かっこいい技術よりも、使う人にやさしい仕組みです。</p>
+                    <p class="pt-4 border-t border-mint text-sage font-medium">
+                        専門用語や技術の深さだけではなく、人の役に立ちたいという気持ちを一番大切にしています。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ミッション・ビジョン -->
+    <section class="py-32 px-6 bg-white relative overflow-hidden">
+        <!-- 装飾図形 -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-mint rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-softyellow rounded-full mix-blend-multiply filter blur-3xl opacity-30 transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 fade-up">
+            <span class="text-sage font-bold tracking-widest text-sm mb-4 block">MISSION / VISION</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-charcoal mb-12">
+                つなぐ、を、もっとやさしく。
+            </h2>
+            <p class="text-xl md:text-2xl text-softgray leading-relaxed text-balance">
+                大切なデータを預かることは、<br class="hidden md:block">人の想いや仕事の流れを預かることでもあります。<br><br>
+                毎日あたりまえに使えること。<br>
+                困ったときに、すぐそばにいること。<br><br>
+                そんな「あたりまえ」を支えることに、<br class="hidden md:block">私たちは誇りを持っています。
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. ストリンクが選ばれる6つの理由 -->
+    <section class="py-32 px-6 bg-warmwhite">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">REASONS</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-charcoal">ストリンクが、選ばれ続ける6つの理由。</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 理由1 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-mint rounded-2xl flex items-center justify-center mb-6 text-sage">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">1. 自社開発</h3>
+                    <p class="text-softgray leading-relaxed">自分たちのアイデアを、直接サービス改善に反映できる環境があります。</p>
+                </div>
+                <!-- 理由2 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-coral/20 rounded-2xl flex items-center justify-center mb-6 text-coral">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">2. 一気通貫サポート</h3>
+                    <p class="text-softgray leading-relaxed">企画・開発・運用・サポートまで、顔が見える体制でお客様に向き合います。</p>
+                </div>
+                <!-- 理由3 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-mint rounded-2xl flex items-center justify-center mb-6 text-sage">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">3. 純国産サービス</h3>
+                    <p class="text-softgray leading-relaxed">日本企業の使いやすさに寄り添った設計で、細かなニーズに柔軟に応えます。</p>
+                </div>
+                <!-- 理由4 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-mint rounded-2xl flex items-center justify-center mb-6 text-sage">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">4. 安定したサービス基盤</h3>
+                    <p class="text-softgray leading-relaxed">企業活動を支えるインフラとして、いつでも安心して使える環境を提供します。</p>
+                </div>
+                <!-- 理由5 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-coral/20 rounded-2xl flex items-center justify-center mb-6 text-coral">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">5. チームで支える文化</h3>
+                    <p class="text-softgray leading-relaxed">一人で抱え込まず、すぐに相談しながら進められる温かい社風があります。</p>
+                </div>
+                <!-- 理由6 -->
+                <div class="bg-white rounded-3xl p-8 shadow-apple transition-shadow hover:shadow-apple-hover fade-up">
+                    <div class="w-14 h-14 bg-mint rounded-2xl flex items-center justify-center mb-6 text-sage">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal mb-4">6. 改善を歓迎する環境</h3>
+                    <p class="text-softgray leading-relaxed">小さな気づきや提案を大切にし、全員でより良いサービスづくりにつなげます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 数字で見るストリンク -->
+    <section class="py-32 px-6 bg-sage text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-20 fade-up">
+                <span class="text-mint font-bold tracking-widest text-sm mb-4 block">DATA</span>
+                <h2 class="text-3xl md:text-4xl font-bold">わたしたちのことを、少しだけ数字で。</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16 text-center">
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">平均年齢</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="34.2">0</span><span class="text-2xl ml-1">歳</span></div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">男女比</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2">5:5</div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">平均残業時間</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="12">0</span><span class="text-2xl ml-1">時間/月</span></div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">有給取得率</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="78">0</span><span class="text-2xl ml-1">%</span></div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">リモート勤務率</p>
+                    <div class="text-4xl md:text-5xl font-bold mb-2">週<span class="count-up" data-target="2">0</span>日程度</div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">平均勤続年数</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="6.4">0</span><span class="text-2xl ml-1">年</span></div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">未経験入社率</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="42">0</span><span class="text-2xl ml-1">%</span></div>
+                </div>
+                <div class="fade-up">
+                    <p class="text-mint text-sm font-bold mb-2">自社サービス運用年数</p>
+                    <div class="text-5xl md:text-6xl font-bold mb-2"><span class="count-up" data-target="12">0</span><span class="text-2xl ml-1">年</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 仕事内容・募集職種 -->
+    <section class="py-32 px-6 bg-warmwhite">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">JOBS</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-charcoal mb-6">あなたにお願いしたい、大切な役割。</h2>
+                <p class="text-softgray text-lg max-w-2xl mx-auto">
+                    未経験でも、得意なことが一つあれば大丈夫。<br>
+                    あなたのペースで、少しずつストリンクの仕事に慣れていけます。
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- 職種1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-apple fade-up group">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-sage mb-2">カスタマーサポート / サービス運用</h3>
+                            <p class="text-charcoal font-medium mb-4">お客様の一番近くで、安心を届ける仕事です。</p>
+                            <div class="flex flex-wrap gap-2 text-sm">
+                                <span class="bg-mint px-3 py-1 rounded-full text-sage">未経験歓迎</span>
+                                <span class="bg-gray-100 px-3 py-1 rounded-full text-softgray">人のサポートが好き</span>
+                            </div>
+                        </div>
+                        <a href="#cta" class="shrink-0 text-coral font-bold group-hover:text-coralhover flex items-center transition-colors">
+                            詳細を見る
+                            <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 職種2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-apple fade-up group">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-sage mb-2">Webディレクション / 開発サポート</h3>
+                            <p class="text-charcoal font-medium mb-4">サービスをより使いやすく、やさしく進化させる仕事です。</p>
+                            <div class="flex flex-wrap gap-2 text-sm">
+                                <span class="bg-mint px-3 py-1 rounded-full text-sage">改善提案</span>
+                                <span class="bg-gray-100 px-3 py-1 rounded-full text-softgray">チーム連携</span>
+                            </div>
+                        </div>
+                        <a href="#cta" class="shrink-0 text-coral font-bold group-hover:text-coralhover flex items-center transition-colors">
+                            詳細を見る
+                            <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 職種3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-apple fade-up group">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-sage mb-2">営業サポート / バックオフィス</h3>
+                            <p class="text-charcoal font-medium mb-4">社内外の円滑なコミュニケーションを支える縁の下の力持ちです。</p>
+                            <div class="flex flex-wrap gap-2 text-sm">
+                                <span class="bg-mint px-3 py-1 rounded-full text-sage">未経験歓迎</span>
+                                <span class="bg-gray-100 px-3 py-1 rounded-full text-softgray">丁寧な作業</span>
+                            </div>
+                        </div>
+                        <a href="#cta" class="shrink-0 text-coral font-bold group-hover:text-coralhover flex items-center transition-colors">
+                            詳細を見る
+                            <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. 入社後のステップ & 8. 1日の流れ -->
+    <section class="py-32 px-6 bg-white">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
+            
+            <!-- 入社後のステップ -->
+            <div class="fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">STEP</span>
+                <h2 class="text-3xl font-bold text-charcoal mb-12">ひとり立ちまで、ちゃんと隣で。</h2>
+                
+                <div class="relative border-l-2 border-mint ml-4 space-y-12">
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-mint border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-sage mb-2">入社 ~ 1ヶ月</h3>
+                        <p class="text-softgray">サービス理解、基本操作、先輩の対応見学を行います。まずはストリンクのサービスやお客様について知る期間です。</p>
+                    </div>
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-mint border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-sage mb-2">2 ~ 3ヶ月</h3>
+                        <p class="text-softgray">簡単な問い合わせ対応や、社内マニュアルの確認を行います。わからないことは先輩に相談しながら進めます。</p>
+                    </div>
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-mint border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-sage mb-2">4 ~ 6ヶ月</h3>
+                        <p class="text-softgray">お客様対応や改善提案のミーティングに参加します。少しずつ自分の意見や気づきを仕事に反映していきます。</p>
+                    </div>
+                    <div class="relative pl-8">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-coral border-4 border-white shadow-sm"></div>
+                        <h3 class="text-xl font-bold text-sage mb-2">6ヶ月以降</h3>
+                        <p class="text-softgray">得意分野に応じて、企画・改善・サポートなどに関わります。自分らしい関わり方を見つけながら、仕事の幅を広げていきます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1日の流れ -->
+            <div class="fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">DAILY SCHEDULE</span>
+                <h2 class="text-3xl font-bold text-charcoal mb-12">ストリンクで働く、ある1日。</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1">9:30</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">出社・チーム朝会</h4>
+                            <p class="text-sm text-softgray mt-1">今日一日のタスクや、気になる連絡事項を共有します。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1">10:00</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">お問い合わせ内容の確認</h4>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1">12:00</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">ランチ</h4>
+                            <p class="text-sm text-softgray mt-1">近くのお店を開拓したり、お弁当を食べたり、自由に過ごします。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1">13:00</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">お客様対応・改善提案</h4>
+                            <p class="text-sm text-softgray mt-1">お客様からの声をまとめ、開発チームへフィードバックすることも。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl border-l-4 border-coral">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1 ml-[-4px]">15:00</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">サービス改善ミーティング</h4>
+                            <p class="text-sm text-softgray mt-1">小さな気づきをチームで共有し、より使いやすいサービスを目指します。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start bg-warmwhite p-4 rounded-2xl">
+                        <div class="text-sage font-bold font-mono w-16 shrink-0 mt-1">18:30</div>
+                        <div>
+                            <h4 class="font-bold text-charcoal">退勤</h4>
+                            <p class="text-sm text-softgray mt-1">残業は少なめ。プライベートの時間もしっかり大切にできます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 9. 社員の声・社風 -->
+    <section class="py-32 px-6 bg-mint/30 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">CULTURE</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-charcoal mb-6">飾らない、わたしたちの日常。</h2>
+                <p class="text-softgray text-lg max-w-2xl mx-auto leading-relaxed">
+                    「お疲れ様」の声が自然に飛び交うオフィス。<br>
+                    役職やキャリアに関係なく、さん付けで呼び合う。<br>
+                    そんな、なんてことない空気感が、私たちの自慢です。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 写真1 -->
+                <div class="relative group rounded-3xl overflow-hidden shadow-apple fade-up">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="相談している様子" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <p class="font-hand text-softyellow text-2xl mb-2">「困ったときは、すぐに助けてくれる」</p>
+                            <p class="text-sm opacity-90">失敗したときのフォロー体制がしっかりしているから、安心して新しいことに挑戦できます。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 写真2 -->
+                <div class="relative group rounded-3xl overflow-hidden shadow-apple fade-up delay-100">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" alt="明るい表情で働く様子" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <p class="font-hand text-softyellow text-2xl mb-2">「意見が形になるのが嬉しい」</p>
+                            <p class="text-sm opacity-90">日々の業務での気づきが、サービスの改善に直接つながることに大きなやりがいを感じます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. こんな人と働きたい -->
+    <section class="py-32 px-6 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">MATCHING</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-charcoal">こんな人と、いっしょに働きたい。</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 合う人 -->
+                <div class="bg-mint/20 rounded-3xl p-10 border border-mint fade-up">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="bg-sage text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">◯</div>
+                        <h3 class="text-2xl font-bold text-sage">合う人</h3>
+                    </div>
+                    <ul class="space-y-6 text-charcoal">
+                        <li class="flex gap-4">
+                            <svg class="w-6 h-6 text-sage shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>人の困りごとを放っておけない人</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <svg class="w-6 h-6 text-sage shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>派手な成果より、日々の改善にやりがいを感じる人</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <svg class="w-6 h-6 text-sage shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>チームで相談しながら進めたい人</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <svg class="w-6 h-6 text-sage shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>ITを、人の役に立つ道具として考えたい人</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 合わないかもしれない人 -->
+                <div class="bg-warmwhite rounded-3xl p-10 fade-up">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="bg-softgray text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">△</div>
+                        <h3 class="text-2xl font-bold text-softgray">合わないかもしれない人</h3>
+                    </div>
+                    <ul class="space-y-6 text-softgray">
+                        <li class="flex gap-4">
+                            <span class="w-1.5 h-1.5 rounded-full bg-softgray mt-2.5 shrink-0"></span>
+                            <span>一人で黙々と完結する仕事だけをしたい人</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="w-1.5 h-1.5 rounded-full bg-softgray mt-2.5 shrink-0"></span>
+                            <span>お客様とのやり取りに強い抵抗がある人</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="w-1.5 h-1.5 rounded-full bg-softgray mt-2.5 shrink-0"></span>
+                            <span>丁寧さよりスピードだけを重視したい人</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. FAQ -->
+    <section class="py-32 px-6 bg-warmwhite">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-sage font-bold tracking-widest text-sm mb-4 block">FAQ</span>
+                <h2 class="text-3xl font-bold text-charcoal">気になること、全部お答えします。</h2>
+            </div>
+
+            <div class="space-y-2 fade-up">
+                <!-- Q1 -->
+                <details class="group border-b border-mint py-4 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-charcoal text-lg list-none">
+                        <span>未経験でも応募できますか?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-45 text-sage text-2xl">+</span>
+                    </summary>
+                    <div class="text-softgray mt-4 leading-relaxed pb-2">
+                        はい、もちろんです。現在活躍しているメンバーの約4割が未経験からのスタートです。入社後は先輩が丁寧にサポートし、あなたのペースで仕事に慣れていける環境を整えています。
+                    </div>
+                </details>
+                <!-- Q2 -->
+                <details class="group border-b border-mint py-4 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-charcoal text-lg list-none">
+                        <span>残業はどのくらいありますか?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-45 text-sage text-2xl">+</span>
+                    </summary>
+                    <div class="text-softgray mt-4 leading-relaxed pb-2">
+                        月平均で12時間程度です。チーム全体で業務を分担し、特定のメンバーに負荷が集中しないよう管理しています。プライベートの時間もしっかり確保できます。
+                    </div>
+                </details>
+                <!-- Q3 -->
+                <details class="group border-b border-mint py-4 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-charcoal text-lg list-none">
+                        <span>リモート勤務は可能ですか?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-45 text-sage text-2xl">+</span>
+                    </summary>
+                    <div class="text-softgray mt-4 leading-relaxed pb-2">
+                        はい、週2日程度のリモート勤務を取り入れています。業務内容やチームの状況に合わせて、オフィス出社とリモートワークを柔軟に組み合わせて働くことができます。
+                    </div>
+                </details>
+                <!-- Q4 -->
+                <details class="group border-b border-mint py-4 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-charcoal text-lg list-none">
+                        <span>服装に決まりはありますか?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-45 text-sage text-2xl">+</span>
+                    </summary>
+                    <div class="text-softgray mt-4 leading-relaxed pb-2">
+                        オフィスカジュアルを基本としており、比較的自由です。清潔感があり、仕事がしやすい服装であれば問題ありません。
+                    </div>
+                </details>
+                <!-- Q5 -->
+                <details class="group border-b border-mint py-4 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-charcoal text-lg list-none">
+                        <span>カジュアル面談だけでも可能ですか?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-45 text-sage text-2xl">+</span>
+                    </summary>
+                    <div class="text-softgray mt-4 leading-relaxed pb-2">
+                        大歓迎です。「まずは話を聞いてみたい」という方も、履歴書不要でお気軽にご参加いただけます。お互いの価値観が合うかどうかを確かめる場としてご活用ください。
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. 応募導線・CTA -->
+    <section id="cta" class="py-32 px-6 bg-sage relative overflow-hidden">
+        <!-- 背景の抽象装飾 -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <svg class="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3" width="600" height="600" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#DDEBE7" d="M45.7,-76.4C58.9,-69.3,69.2,-55.5,77.7,-41C86.2,-26.5,92.9,-11.3,90.4,2.5C87.9,16.3,76.2,28.6,65.3,39.4C54.4,50.2,44.3,59.5,31.7,66.8C19.1,74.1,4.1,79.4,-9.9,78.2C-23.9,77,-36.8,69.3,-48.6,60C-60.4,50.7,-71.1,39.8,-77.8,26.4C-84.5,13,-87.2,-2.9,-83.4,-17.3C-79.6,-31.7,-69.3,-44.6,-56.3,-52.1C-43.3,-59.6,-27.6,-61.7,-12.9,-65C1.8,-68.3,16.6,-72.8,32.5,-83.5L45.7,-76.4Z" transform="translate(100 100)" />
+            </svg>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 fade-up">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight text-balance">
+                まずは、お茶を飲むくらいの気持ちでお話ししませんか?
+            </h2>
+            <div class="text-warmwhite text-lg md:text-xl space-y-4 mb-12">
+                <p>最初から立派な志望動機がなくても大丈夫です。</p>
+                <p>あなたのこれまでのこと、これからのこと。<br>ざっくばらんに聞かせてください。</p>
+                <p>まずは履歴書なしで、気軽にお話しいただけます。</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#" class="bg-coral hover:bg-coralhover text-white font-bold py-5 px-10 rounded-full shadow-xl transition-all transform hover:-translate-y-1 hover:shadow-2xl text-lg flex items-center justify-center">
+                    カジュアル面談を申し込む
+                </a>
+                <a href="#" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold py-5 px-10 rounded-full transition-all text-lg flex items-center justify-center backdrop-blur-sm">
+                    募集要項を詳しく見る
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-charcoal text-softgray py-12 text-center text-sm">
+        <p>&copy; STRINK Inc. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- GSAP & ScrollTrigger Setup ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Navbar background change on scroll
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-sm');
+                    nav.style.background = 'rgba(255, 255, 255, 0.9)';
+                } else {
+                    nav.classList.remove('shadow-sm');
+                    nav.style.background = 'rgba(255, 255, 255, 0.7)';
+                }
+            });
+
+            // Fade Up Animation for sections
+            gsap.utils.toArray('.fade-up').forEach((elem) => {
+                gsap.fromTo(elem, 
+                    { y: 50, autoAlpha: 0 }, 
+                    {
+                        duration: 1, 
+                        y: 0, 
+                        autoAlpha: 1, 
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%", // when top of element hits 85% of viewport
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // Number Count Up Animation
+            gsap.utils.toArray('.count-up').forEach(el => {
+                const target = parseFloat(el.getAttribute('data-target'));
+                const isFloat = target % 1 !== 0;
+                
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: "top 90%",
+                    onEnter: () => {
+                        gsap.to(el, {
+                            innerHTML: target,
+                            duration: 2,
+                            ease: "power2.out",
+                            snap: { innerHTML: isFloat ? 0.1 : 1 },
+                            onUpdate: function() {
+                                if(isFloat) {
+                                    el.innerHTML = parseFloat(this.targets()[0].innerHTML).toFixed(1);
+                                } else {
+                                    el.innerHTML = Math.round(this.targets()[0].innerHTML);
+                                }
+                            }
+                        });
+                    },
+                    once: true
+                });
+            });
+
+
+            // --- Three.js Setup (Hero Section 3D Wave) ---
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            
+            // Fog to blend with background
+            scene.fog = new THREE.FogExp2(0x5F8F89, 0.0015);
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 100;
+            camera.position.y = 30;
+            camera.lookAt(0, 0, 0);
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Particles Geometry
+            const geometry = new THREE.BufferGeometry();
+            const count = 4000;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+
+            const colorSage = new THREE.Color('#5F8F89');
+            const colorMint = new THREE.Color('#DDEBE7');
+            const colorYellow = new THREE.Color('#F3D98B');
+            const colorWhite = new THREE.Color('#FFFFFF');
+
+            for(let i=0; i<count; i++) {
+                // Wide spread
+                positions[i*3] = (Math.random() - 0.5) * 500;
+                positions[i*3+1] = 0;
+                positions[i*3+2] = (Math.random() - 0.5) * 500;
+
+                // Mix colors randomly for a warm, gentle feeling
+                const rand = Math.random();
+                let mixedColor = colorSage.clone();
+                if (rand > 0.8) {
+                    mixedColor = colorYellow;
+                } else if (rand > 0.5) {
+                    mixedColor = colorMint;
+                } else if (rand > 0.4) {
+                    mixedColor = colorWhite;
+                }
+
+                colors[i*3] = mixedColor.r;
+                colors[i*3+1] = mixedColor.g;
+                colors[i*3+2] = mixedColor.b;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            // Create circular soft texture for particles
+            const canvas = document.createElement('canvas');
+            canvas.width = 16;
+            canvas.height = 16;
+            const context = canvas.getContext('2d');
+            const gradient = context.createRadialGradient(8, 8, 0, 8, 8, 8);
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+            context.fillStyle = gradient;
+            context.fillRect(0,0,16,16);
+            const texture = new THREE.CanvasTexture(canvas);
+
+            const material = new THREE.PointsMaterial({
+                size: 2.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                map: texture,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Animation Loop
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.005;
+                
+                const posAttribute = geometry.attributes.position;
+                for(let i=0; i<count; i++) {
+                    const x = posAttribute.getX(i);
+                    const z = posAttribute.getZ(i);
+                    // Gentle wave motion combining sine and cosine
+                    const y = Math.sin(x * 0.02 + time) * 8 + Math.cos(z * 0.02 + time) * 8;
+                    posAttribute.setY(i, y);
+                }
+                posAttribute.needsUpdate = true;
+                
+                // Slow global rotation
+                particles.rotation.y = time * 0.1;
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize Handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Parallax effect for 3D camera on scroll
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if(scrollY < window.innerHeight) {
+                    camera.position.y = 30 + scrollY * 0.05;
+                    camera.position.z = 100 - scrollY * 0.02;
+                    camera.lookAt(0, 0, 0);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
